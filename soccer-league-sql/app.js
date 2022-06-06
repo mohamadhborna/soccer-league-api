@@ -1,9 +1,16 @@
 const express = require('express')
 const dotenv = require("dotenv")
+
 const {setHeaders} = require('./middlewares/headers')
+const db = require('./models/index')
 
 //? load config
 dotenv.config({path:'./config/conf.env'})
+
+//? connect db 
+db.sequelize.sync({ force: true }).then(() => {
+    console.log("Drop and re-sync db.");
+  });
 
 const app = express()
 
